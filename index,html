@@ -1,0 +1,877 @@
+# chinese-eng<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Hello Chinese! 🇹🇼 Real Taiwanese Mandarin for English Speakers</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --duo-green: #22c55e;
+      --duo-darkgreen: #15803d;
+      --duo-yellow: #facc15;
+      --duo-red: #ef4444;
+      --duo-blue: #3b82f6;
+      --text-main: #1e293b;
+      --text-sub: #64748b;
+      --pinyin: #0284c7;
+      --zhuyin: #d97706;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text-main); padding-bottom: 90px; }
+
+    header { background-color: #ffffff; border-bottom: 2px solid var(--border); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+    .brand-group { display: flex; align-items: center; gap: 10px; }
+    .brand-logo { width: 40px; height: 40px; background: #22c55e; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+    .brand-title { font-size: 1.25rem; font-weight: 900; color: #0f172a; display: flex; align-items: center; gap: 6px; }
+    .brand-sub { font-size: 0.75rem; color: var(--text-sub); }
+
+    .header-stats { display: flex; align-items: center; gap: 14px; }
+    .stat-badge { display: flex; align-items: center; gap: 4px; font-weight: 800; font-size: 0.95rem; }
+    .ctrl-badge { background: #f1f5f9; border: 1.5px solid #cbd5e1; padding: 5px 12px; border-radius: 20px; font-size: 0.82rem; font-weight: 800; cursor: pointer; }
+    .ctrl-badge.active { background: #22c55e; color: #fff; border-color: #16a34a; }
+
+    .nav-wrap { max-width: 1080px; margin: 0 auto; padding: 12px 16px 0; overflow-x: auto; }
+    .top-nav { display: flex; gap: 8px; border-bottom: 2px solid var(--border); padding-bottom: 6px; }
+    .nav-btn { background: transparent; border: none; padding: 10px 16px; font-size: 0.95rem; font-weight: 800; color: #64748b; cursor: pointer; white-space: nowrap; border-radius: 12px; transition: 0.15s; display: flex; align-items: center; gap: 6px; }
+    .nav-btn.active { background: #dcfce7; color: #15803d; }
+
+    .container { max-width: 1080px; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; gap: 20px; }
+
+    .hero-banner { background: linear-gradient(135deg, #15803d, #16a34a); border-radius: 20px; padding: 24px; color: #ffffff; position: relative; box-shadow: 0 4px 15px rgba(22, 163, 74, 0.2); }
+    .hero-tag { display: inline-block; background: rgba(255,255,255,0.2); font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 12px; margin-bottom: 8px; text-transform: uppercase; }
+    .hero-title { font-size: 1.6rem; font-weight: 900; margin-bottom: 6px; }
+    .hero-desc { font-size: 0.92rem; opacity: 0.95; line-height: 1.45; }
+    .hero-lightning { position: absolute; right: 24px; top: 24px; font-size: 2.5rem; opacity: 0.3; }
+
+    .filter-pills { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 10px; }
+    .pill { background: #ffffff; border: 1.5px solid var(--border); padding: 8px 16px; border-radius: 30px; font-size: 0.85rem; font-weight: 800; color: #475569; cursor: pointer; white-space: nowrap; transition: 0.15s; }
+    .pill.active { background: #22c55e; color: #ffffff; border-color: #16a34a; }
+
+    .search-box { background: #ffffff; border: 2px solid var(--border); border-radius: 14px; padding: 10px 16px; display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .search-input { border: none; outline: none; width: 100%; font-size: 0.95rem; color: #1e293b; }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 16px; }
+    .quote-card { background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); transition: transform 0.15s; }
+    .quote-card:hover { transform: translateY(-2px); border-color: #22c55e; }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .card-zh { font-size: 1.25rem; font-weight: 900; color: #0f172a; line-height: 1.35; }
+    .card-py { font-size: 0.88rem; color: var(--pinyin); font-weight: 700; }
+    .card-zy { font-size: 0.82rem; color: var(--zhuyin); font-weight: 700; margin-top: 2px; }
+    .card-en { font-size: 0.85rem; color: #475569; border-top: 1px solid #f1f5f9; padding-top: 6px; font-style: italic; }
+    .card-tip { font-size: 0.78rem; color: #94a3b8; display: flex; align-items: center; gap: 4px; }
+    .speaker-btn { background: #f0fdf4; border: 1px solid #bbf7d0; color: #16a34a; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+
+    .place-card { background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+    .place-hero { background: #1e293b; color: #fff; padding: 20px 16px; display: flex; justify-content: space-between; align-items: center; }
+    .place-body { padding: 16px; display: flex; flex-direction: column; gap: 6px; }
+
+    .tones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-bottom: 20px; }
+    .tone-card { border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+    .tone-red { background: #fff1f2; border: 1.5px solid #fecdd3; color: #e11d48; }
+    .tone-yellow { background: #fefce8; border: 1.5px solid #fef08a; color: #ca8a04; }
+    .tone-green { background: #f0fdf4; border: 1.5px solid #bbf7d0; color: #16a34a; }
+    .tone-blue { background: #eff6ff; border: 1.5px solid #bfdbfe; color: #2563eb; }
+
+    .builder-box { background: #ffffff; border: 2px solid #e2e8f0; padding: 20px; border-radius: 18px; text-align: center; margin-bottom: 16px; }
+    .display-zh { font-size: 1.5rem; font-weight: 900; color: #0f172a; }
+    .chip-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .chip { background: #f1f5f9; border: 1.5px solid #cbd5e1; padding: 8px 14px; border-radius: 20px; font-size: 0.88rem; cursor: pointer; font-weight: 700; }
+    .chip.selected { background: #22c55e; color: #fff; border-color: #16a34a; }
+
+    .chat-container { display: flex; flex-direction: column; gap: 14px; }
+    .chat-bubble { max-width: 86%; padding: 14px 18px; border-radius: 20px; line-height: 1.5; }
+    .chat-bubble.tourist { align-self: flex-start; background: #eff6ff; border: 1.5px solid #bfdbfe; color: #1e3a5f; border-bottom-left-radius: 4px; }
+    .chat-bubble.local { align-self: flex-end; background: #f0fdf4; border: 1.5px solid #bbf7d0; color: #14532d; border-bottom-right-radius: 4px; }
+
+    .flashcard-wrap { perspective: 1000px; max-width: 480px; margin: 0 auto; height: 260px; }
+    .flashcard-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; cursor: pointer; }
+    .flashcard-inner.flipped { transform: rotateY(180deg); }
+    .fc-front, .fc-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; justify-content: center; align-items: center; border: 2px solid #cbd5e1; box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+    .fc-front { background: #ffffff; }
+    .fc-back { background: #1e293b; color: #ffffff; transform: rotateY(180deg); text-align: center; }
+
+    .tab-section { display: none; }
+    .tab-section.active { display: block !important; }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部狀態列 -->
+  <header>
+    <div class="brand-group">
+      <div class="brand-logo">🐼</div>
+      <div>
+        <div class="brand-title">¡Hello Chinese! <span style="font-size:0.7rem; background:#fee2e2; color:#ef4444; padding:2px 6px; border-radius:10px;">3.0 Pro</span></div>
+        <div class="brand-sub">Real Taiwanese Mandarin for English Speakers (Zhuyin + Pinyin)</div>
+      </div>
+    </div>
+    <div class="header-stats">
+      <div class="stat-badge" style="color:#f97316;">🔥 <span>7</span></div>
+      <div class="stat-badge" style="color:#ef4444;">❤️ <span>5</span></div>
+      <div class="stat-badge" style="color:#3b82f6;">💎 <span>380</span></div>
+      <button id="toggleSpeed" class="ctrl-badge" onclick="toggleSpeedMode()">🐢 1.0x</button>
+      <button id="toggleChar" class="ctrl-badge active" onclick="toggleCharMode()">🇹🇼 Traditional (TC)</button>
+    </div>
+  </header>
+
+  <!-- 頂部水平分頁導覽列 -->
+  <div class="nav-wrap">
+    <div class="top-nav">
+      <button id="nav-btn-universal" class="nav-btn active" onclick="switchMainTab('universal')">⚡ Survival Phrases (萬用句典)</button>
+      <button id="nav-btn-places" class="nav-btn" onclick="switchMainTab('places')">🗺️ Places & Food Search (旅遊景點)</button>
+      <button id="nav-btn-dialog" class="nav-btn" onclick="switchMainTab('dialog')">🍱 6 Real Dialogues (情境對話)</button>
+      <button id="nav-btn-builder" class="nav-btn" onclick="switchMainTab('builder')">🗣️ Oral Pattern Trainer (句型填空)</button>
+      <button id="nav-btn-foods" class="nav-btn" onclick="switchMainTab('foods')">🥟 Night Market Food (美食大百科)</button>
+      <button id="nav-btn-flashcards" class="nav-btn" onclick="switchMainTab('flashcards')">🎴 3D Flashcards (抽認卡)</button>
+      <button id="nav-btn-phonetics" class="nav-btn" onclick="switchMainTab('phonetics')">🔤 Phonetic Chart (注音對照)</button>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- 1. 萬用句典 (Survival Phrases) -->
+    <section id="sec-universal" class="tab-section active">
+      <div class="hero-banner">
+        <span class="hero-tag">TRAVELER'S LIFESAVER! CN TW</span>
+        <div class="hero-title">Essential Survival Phrases for Any Situation</div>
+        <div class="hero-desc">Master key sentences to ask for help, survive misunderstandings, order customized food, and pay with ease. Tap any card to hear pronunciation.</div>
+        <div class="hero-lightning">⚡</div>
+      </div>
+
+      <div class="filter-pills">
+        <button class="pill active" onclick="filterUniversal('all')">🌟 All Phrases</button>
+        <button class="pill" onclick="filterUniversal('help')">🆘 Asking Help</button>
+        <button class="pill" onclick="filterUniversal('buy')">💳 Shopping & Paying</button>
+        <button class="pill" onclick="filterUniversal('eat')">🍜 Food & Dining</button>
+        <button class="pill" onclick="filterUniversal('polite')">💛 Politeness</button>
+        <button class="pill" onclick="filterUniversal('traffic')">🗺️ Directions & Street</button>
+      </div>
+
+      <div class="search-box">
+        <span>🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search phrase in English or Chinese (e.g., 'slowly', 'cilantro', 'bill', 'borrow')..." oninput="searchPhrases()">
+      </div>
+
+      <div class="cards-grid" id="universalCardsGrid"></div>
+    </section>
+
+    <!-- 2. 旅遊景點與問路覓食互動器 (Places & Food Search) -->
+    <section id="sec-places" class="tab-section">
+      <div class="hero-banner" style="background: linear-gradient(135deg, #0284c7, #0ea5e9);">
+        <span class="hero-tag">EXPLORE TAIWAN</span>
+        <div class="hero-title">Must-Visit Destinations & Street Food Finder</div>
+        <div class="hero-desc">Combine top Taiwanese attractions with iconic local eats to construct natural travel questions.</div>
+        <div class="hero-lightning">🗺️</div>
+      </div>
+
+      <!-- 互動造句器：不好意思，請問 [地名] 有賣 [小吃] 嗎？ -->
+      <div class="builder-box">
+        <div style="font-size:0.85rem; font-weight:800; color:#0284c7; text-transform:uppercase; margin-bottom:4px;">💡 Practical Travel Question Pattern：</div>
+        <div class="display-zh" id="askPlaceZh">不好意思，請問西門町有賣滷肉飯嗎？</div>
+        <div style="margin:4px 0;">
+          <span style="color:var(--pinyin); font-weight:700;" id="askPlacePy">Bù hǎoyìsi, qǐngwèn Xīméndīng yǒu mài lǔròufàn ma?</span>
+          <span style="color:var(--zhuyin); font-weight:700; margin-left:8px;" id="askPlaceZy">ㄅㄨˋ ㄏㄠˇ ㄧˋ ˙ㄙ，ㄑㄧㄥˇ ㄨㄣˋ ㄒㄧ ㄇㄣˊ ㄉㄧㄥ ㄧㄡˇ ㄇㄞˋ ㄌㄨˇ ㄖㄡˋ ㄈㄢˋ ˙ㄇㄚ？</span>
+        </div>
+        <div style="font-size:0.9rem; color:#64748b; font-style:italic;" id="askPlaceEn">Excuse me, is braised pork rice sold in Ximending?</div>
+        <button class="ctrl-badge active" style="margin-top:10px;" onclick="speakText(document.getElementById('askPlaceZh').innerText)">🔊 Listen to Pronunciation</button>
+      </div>
+
+      <div style="font-size:0.85rem; font-weight:800; color:#475569;">📍 Step 1: Select a Destination</div>
+      <div class="chip-container" id="placeChips"></div>
+
+      <div style="font-size:0.85rem; font-weight:800; color:#475569; margin-top:10px;">🥢 Step 2: Select a Local Snack</div>
+      <div class="chip-container" id="foodChips"></div>
+
+      <div style="font-size:1.15rem; font-weight:900; color:#0f172a; margin:24px 0 10px;">🏙️ Top 8 Iconic Taiwanese Destinations</div>
+      <div class="cards-grid" id="placesGrid"></div>
+    </section>
+
+    <!-- 3. 6 大生活真實情境會話 (Real Dialogues) -->
+    <section id="sec-dialog" class="tab-section">
+      <div class="hero-banner" style="background: linear-gradient(135deg, #d97706, #f59e0b);">
+        <span class="hero-tag">DAILY CONVERSATIONS</span>
+        <div class="hero-title">6 Real-Life Situations in Taiwan</div>
+        <div class="hero-desc">From ordering customized boba milk tea to catching a cab and hitting the night markets. Tap audio buttons to practice.</div>
+        <div class="hero-lightning">🍱</div>
+      </div>
+
+      <div class="filter-pills">
+        <button class="pill active" onclick="loadDialogue(0)">🧋 1. Boba Tea Shop</button>
+        <button class="pill" onclick="loadDialogue(1)">🍜 2. Beef Noodle Shop</button>
+        <button class="pill" onclick="loadDialogue(2)">🏪 3. 7-Eleven Store</button>
+        <button class="pill" onclick="loadDialogue(3)">🚕 4. Taking a Taxi</button>
+        <button class="pill" onclick="loadDialogue(4)">🚶 5. Asking Directions</button>
+        <button class="pill" onclick="loadDialogue(5)">🏮 6. Night Market Stroll</button>
+      </div>
+      <div class="chat-container" id="dialogueChatBox"></div>
+    </section>
+
+    <!-- 4. 口語句型填空 (Oral Pattern Trainer) -->
+    <section id="sec-builder" class="tab-section">
+      <div class="hero-banner" style="background: linear-gradient(135deg, #7c3aed, #9333ea);">
+        <span class="hero-tag">PATTERN TRAINER</span>
+        <div class="hero-title">Oral Sentence Pattern Drill</div>
+        <div class="hero-desc">Combine logical slots to form natural Chinese sentences in beverage bars, eateries, and public transit.</div>
+        <div class="hero-lightning">🗣️</div>
+      </div>
+
+      <div class="filter-pills">
+        <button class="pill active" onclick="switchBuilderSc('boba')">🧋 Boba Tea Mode</button>
+        <button class="pill" onclick="switchBuilderSc('restaurant')">🍜 Local Diner Mode</button>
+        <button class="pill" onclick="switchBuilderSc('transport')">🚕 Transit & Directions</button>
+      </div>
+
+      <div class="builder-box">
+        <div class="display-zh" id="builderZh">---</div>
+        <div style="margin:4px 0;"><span style="color:var(--pinyin); font-weight:700;" id="builderPy">---</span> <span style="color:var(--zhuyin); font-weight:700; margin-left:8px;" id="builderZy">---</span></div>
+        <div style="font-size:0.9rem; color:#64748b; font-style:italic;" id="builderEn">---</div>
+        <button class="ctrl-badge active" style="margin-top:10px;" onclick="speakText(document.getElementById('builderZh').innerText)">🔊 Play Full Sentence</button>
+      </div>
+
+      <div style="font-size:0.85rem; font-weight:800; color:#475569; margin-bottom:4px;">Step 1: Choose Sentence Framework</div>
+      <div class="chip-container" id="patternChips"></div>
+
+      <div style="font-size:0.85rem; font-weight:800; color:#475569; margin:14px 0 4px;">Step 2: Fill in Matching Vocabulary</div>
+      <div class="chip-container" id="itemChips"></div>
+    </section>
+
+    <!-- 5. 夜市美食大百科 (Night Market Food) -->
+    <section id="sec-foods" class="tab-section">
+      <div class="hero-banner" style="background: linear-gradient(135deg, #b91c1c, #dc2626);">
+        <span class="hero-tag">GASTRONOMY GUIDE</span>
+        <div class="hero-title">Taiwanese Night Market & Local Food Guide</div>
+        <div class="hero-desc">Discover the detailed ingredients and culinary secrets of popular Taiwanese street foods.</div>
+        <div class="hero-lightning">🥟</div>
+      </div>
+      <div class="cards-grid" id="foodsGrid"></div>
+    </section>
+
+    <!-- 6. 3D 抽認卡 (Flashcards) -->
+    <section id="sec-flashcards" class="tab-section">
+      <div class="hero-banner" style="background: linear-gradient(135deg, #0f766e, #0d9488);">
+        <span class="hero-tag">MNEMONIC FLASHCARDS</span>
+        <div class="hero-title">3D Flashcards with Memory Hacks</div>
+        <div class="hero-desc">Tap the card to flip it over and learn intuitive mnemonic associations for English speakers.</div>
+        <div class="hero-lightning">🎴</div>
+      </div>
+
+      <div style="text-align: center; margin-top:10px;">
+        <div class="flashcard-wrap" onclick="flipCard()">
+          <div class="flashcard-inner" id="flashCardInner">
+            <div class="fc-front">
+              <span id="fcFrontEmoji" style="font-size:4rem; margin-bottom:8px;">🧋</span>
+              <span id="fcFrontZh" style="font-size:2.2rem; font-weight:900; color:#0f172a;">珍珠奶茶</span>
+              <div style="margin-top:8px;">
+                <span id="fcFrontPy" style="color:var(--pinyin); font-size:1.1rem; font-weight:700;">zhēnzhū nǎichá</span>
+                <span id="fcFrontZy" style="color:var(--zhuyin); font-size:1rem; font-weight:700; margin-left:8px;">ㄓㄣ ㄓㄨ ㄋㄞˇ ㄔㄚˊ</span>
+              </div>
+            </div>
+            <div class="fc-back">
+              <span id="fcBackEn" style="font-size:1.4rem; font-weight:800; color:#facc15;">Bubble Milk Tea</span>
+              <div style="background:rgba(255,255,255,0.1); border-radius:12px; padding:12px; margin-top:12px; width:100%;">
+                <div style="font-size:0.75rem; color:#4ade80; font-weight:800;">💡 MEMORY HACK / 記憶技巧:</div>
+                <p id="fcBackTip" style="font-size:0.85rem; color:#f1f5f9; margin-top:4px; line-height:1.4;"></p>
+              </div>
+              <button class="ctrl-badge active" style="margin-top:12px;" onclick="event.stopPropagation(); speakText(document.getElementById('fcFrontZh').innerText)">🔊 Play Audio</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:20px; display:flex; justify-content:center; align-items:center; gap:14px;">
+          <button class="ctrl-badge" onclick="prevCard()">⬅️ Previous</button>
+          <span id="fcCounter" style="font-size:0.95rem; font-weight:800; color:#64748b;">1 / 8</span>
+          <button class="ctrl-badge active" onclick="nextCard()">Next ➡️</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. 注音對照表 (Guía Fonética de Contraste 英文版) -->
+    <section id="sec-phonetics" class="tab-section">
+      <div style="background:#ffffff; border-radius:20px; padding:24px; border:2px solid #e2e8f0;">
+        <div style="font-size:0.8rem; font-weight:800; color:#9333ea; letter-spacing:0.5px; text-transform:uppercase;">CONTRASTIVE PHONETIC GUIDE (Zhuyin ⇄ Pinyin)</div>
+        <div style="font-size:1.55rem; font-weight:900; color:#0f172a; margin:6px 0 12px; display:flex; justify-content:space-between; align-items:center;">
+          <span>Master Chinese Sounds with English References</span>
+          <div style="background:#ef4444; color:#fff; font-weight:900; width:34px; height:34px; border-radius:6px; display:flex; align-items:center; justify-content:center;">A</div>
+        </div>
+        <p style="font-size:0.9rem; color:#64748b; margin-bottom:20px;">Learn why Pinyin sounds differ from standard English phonics and how Zhuyin (Bopomofo) prevents confusing unaspirated and aspirated consonants.</p>
+
+        <!-- 4 聲調卡片 -->
+        <div class="tones-grid">
+          <div class="tone-card tone-red">
+            <div style="display:flex; justify-content:space-between;"><b>1st Tone (High Flat) ˉ</b> <button class="speaker-btn" onclick="speakText('媽')">🔊</button></div>
+            <div style="font-size:1.15rem; font-weight:900;">mā (ㄇㄚ)</div>
+            <div style="font-size:0.8rem; line-height:1.35;">High, flat pitch. Like holding a steady musical note "Do".</div>
+          </div>
+          <div class="tone-card tone-yellow">
+            <div style="display:flex; justify-content:space-between;"><b>2nd Tone (Rising) ˊ</b> <button class="speaker-btn" onclick="speakText('麻')">🔊</button></div>
+            <div style="font-size:1.15rem; font-weight:900;">má (ㄇㄚˊ)</div>
+            <div style="font-size:0.8rem; line-height:1.35;">Rising pitch, exactly like asking a surprised question: "What?!".</div>
+          </div>
+          <div class="tone-card tone-green">
+            <div style="display:flex; justify-content:space-between;"><b>3rd Tone (Dipping) ˇ</b> <button class="speaker-btn" onclick="speakText('馬')">🔊</button></div>
+            <div style="font-size:1.15rem; font-weight:900;">mǎ (ㄇㄚˇ)</div>
+            <div style="font-size:0.8rem; line-height:1.35;">Dips low then rises slightly: like a hesitant "Weeeell...".</div>
+          </div>
+          <div class="tone-card tone-blue">
+            <div style="display:flex; justify-content:space-between;"><b>4th Tone (Falling) ˋ</b> <button class="speaker-btn" onclick="speakText('罵')">🔊</button></div>
+            <div style="font-size:1.15rem; font-weight:900;">mà (ㄇㄚˋ)</div>
+            <div style="font-size:0.8rem; line-height:1.35;">Sharp, decisive drop: like giving a firm, authoritative command: "NO!".</div>
+          </div>
+        </div>
+
+        <div class="filter-pills" style="margin-bottom:18px;">
+          <button id="pillCons" class="pill active" onclick="switchPhoneticPill('cons')">Consonants / Initials (聲母 21)</button>
+          <button id="pillVoc" class="pill" onclick="switchPhoneticPill('voc')">Vowels / Finals (韻母 16)</button>
+        </div>
+
+        <div class="cards-grid" id="phoneticCardsGrid"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    let isTrad = true;
+    let isSlow = false;
+    let phoneticPill = 'cons';
+    let currentFilter = 'all';
+
+    function switchMainTab(tabKey) {
+      document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+      const sec = document.getElementById(`sec-${tabKey}`);
+      if (sec) sec.classList.add('active');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`nav-btn-${tabKey}`);
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+
+    /* ================= 1. 英文版萬用句典資料庫 ================= */
+    const universalPhrases = [
+      {
+        cat: "help",
+        zh_t: "不好意思，聽不懂，可以說慢一點嗎？", zh_s: "不好意思，听不懂，可以说慢一点吗？",
+        py: "Bù hǎoyìsi, tīng bù dǒng, kěyǐ shuō màn yìdiǎn ma?",
+        zy: "ㄅㄨˋ ㄏㄠˇ ㄧˋ ˙ㄙ，ㄊㄧㄥ ㄅㄨˋ ㄉㄨㄥˇ，ㄎㄜˇ ㄧˇ ㄕㄨㄛ ㄇㄢˋ ㄧˋ ㄉㄧㄢˇ ˙ㄇㄚ？",
+        en: "Excuse me, I don't understand. Could you please speak a bit slower?",
+        tip: "Your #1 lifesaver phrase! If locals speak too fast, use this with confidence."
+      },
+      {
+        cat: "help",
+        zh_t: "請幫我寫下來好嗎？", zh_s: "请帮我写下来好吗？",
+        py: "Qǐng bāng wǒ xiě xiàlái hǎo ma?",
+        zy: "ㄑㄧㄥˇ ㄅㄤ ㄨㄛˇ ㄒㄧㄝˇ ㄒㄧㄚˋ ㄌㄞˊ ㄏㄠˇ ˙ㄇㄚ？",
+        en: "Could you please write it down for me (on phone or paper)?",
+        tip: "Great for complicated street addresses or dish names to translate."
+      },
+      {
+        cat: "help",
+        zh_t: "對不起，我中文不太好。", zh_s: "对不起，我中文不太好。",
+        py: "Duìbùqǐ, wǒ zhōngwén bú tài hǎo.",
+        zy: "ㄉㄨㄟˋ ㄅㄨˋ ㄑㄧˇ，ㄨㄛˇ ㄓㄨㄥ ㄨㄣˊ ㄅㄨˊ ㄊㄞˋ ㄏㄠˇ。",
+        en: "Sorry, my Chinese is not very good.",
+        tip: "Breaks the ice with humility; locals will be patient and helpful right away."
+      },
+      {
+        cat: "help",
+        zh_t: "可以借我充電 / 行動電源嗎？", zh_s: "可以借我充电 / 移动电源吗？",
+        py: "Kěyǐ jiè wǒ chōngdiàn / xíngdòng diànyuán ma?",
+        zy: "ㄎㄜˇ ㄧˇ ㄐㄧㄝˋ ㄨㄛˇ ㄔㄨㄥ ㄉㄧㄢˋ / ㄒㄧㄥˊ ㄉㄨㄥˋ ㄉㄧㄢˋ ㄩㄢˊ ˙ㄇㄚ？",
+        en: "Could I borrow a phone charger / power bank?",
+        tip: "Super handy when your battery runs flat in cafes or restaurants."
+      },
+      {
+        cat: "buy",
+        zh_t: "請問這個多少錢？", zh_s: "请问这个多少钱？",
+        py: "Qǐngwèn zhège duōshǎo qián?",
+        zy: "ㄑㄧㄥˇ ㄨㄣˋ ㄓㄜˋ ˙ㄍㄜ ㄉㄨㄛ ㄕㄠˇ ㄑㄧㄢˊ？",
+        en: "Excuse me, how much is this?",
+        tip: "The universal way to ask the price of any item."
+      },
+      {
+        cat: "buy",
+        zh_t: "可以刷卡嗎？還是只能付現？", zh_s: "可以刷卡吗？还是只能付现？",
+        py: "Kěyǐ shuākǎ ma? Háishì zhǐnéng fùxiàn?",
+        zy: "ㄎㄜˇ ㄧˇ ㄕㄨㄚ ㄎㄚˇ ˙ㄇㄚ？ㄏㄞˊ ㄕˋ ㄓˇ ㄋㄥˊ ㄈㄨˋ ㄒㄧㄢˋ？",
+        en: "Can I pay by credit card, or only cash?",
+        tip: "Most Taiwanese night market vendors and small food stalls accept cash only."
+      },
+      {
+        cat: "eat",
+        zh_t: "不要香菜，謝謝！", zh_s: "不要香菜，谢谢！",
+        py: "Bú yào xiāngcài, xièxie!",
+        zy: "ㄅㄨˊ ㄧㄠˋ ㄒㄧㄤ ㄘㄞˋ，ㄒㄧㄝˋ ˙ㄒㄧㄝ！",
+        en: "No cilantro/coriander, thank you!",
+        tip: "A must-know phrase if you dislike cilantro on noodles, soups, or Gua Bao."
+      },
+      {
+        cat: "eat",
+        zh_t: "我要大杯、微糖微冰。", zh_s: "我要大杯、微糖微冰。",
+        py: "Wǒ yào dà bēi, wéitáng wéibīng.",
+        zy: "ㄨㄛˇ ㄧㄠˋ ㄉㄚˋ ㄅㄟ、ㄨㄟˊ ㄊㄤˊ ㄨㄟˊ ㄅㄧㄥ。",
+        en: "Large size, 30% sugar and low ice, please.",
+        tip: "The golden formula to order bubble milk tea like a local Taiwanese."
+      },
+      {
+        cat: "polite",
+        zh_t: "謝謝你，辛苦了！", zh_s: "谢谢你，辛苦了！",
+        py: "Xièxie nǐ, xīnkǔ le!",
+        zy: "ㄒㄧㄝˋ ˙ㄒㄧㄝ ㄋㄧˇ，ㄒㄧㄣ ㄎㄨˇ ˙ㄌㄜ！",
+        en: "Thank you for your hard work!",
+        tip: "The warmest, polite farewell to say to taxi drivers, waiters, and shopkeepers."
+      },
+      {
+        cat: "traffic",
+        zh_t: "請問洗手間 / 捷運站在哪裡？", zh_s: "请问洗手间 / 捷运站在哪里？",
+        py: "Qǐngwèn xǐshǒujiān / jiéyùnzhàn zài nǎlǐ?",
+        zy: "ㄑㄧㄥˇ ㄨㄣˋ ㄒㄧˇ ㄕㄡˇ ㄐㄧㄢ / ㄐㄧㄝˊ ㄩㄣˋ ㄓㄢˋ ㄗㄞˋ ㄋㄚˇ ㄌㄧˇ？",
+        en: "Excuse me, where is the restroom / MRT station?",
+        tip: "Quickly locate public restrooms or transit stations on the street."
+      }
+    ];
+
+    function filterUniversal(cat) {
+      currentFilter = cat;
+      document.querySelectorAll('#sec-universal .filter-pills .pill').forEach((btn, i) => {
+        btn.classList.toggle('active', ['all','help','buy','eat','polite','traffic'][i] === cat);
+      });
+      renderUniversal();
+    }
+
+    function searchPhrases() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      renderUniversal(q);
+    }
+
+    function renderUniversal(filterText = '') {
+      const grid = document.getElementById('universalCardsGrid');
+      grid.innerHTML = '';
+      universalPhrases.forEach(item => {
+        if (currentFilter !== 'all' && item.cat !== currentFilter) return;
+        const zh = isTrad ? item.zh_t : item.zh_s;
+        if (filterText && !zh.toLowerCase().includes(filterText) && !item.en.toLowerCase().includes(filterText) && !item.py.toLowerCase().includes(filterText)) return;
+
+        const div = document.createElement('div');
+        div.className = 'quote-card';
+        div.innerHTML = `
+          <div class="card-top">
+            <div class="card-zh">${zh}</div>
+            <button class="speaker-btn" onclick="speakText('${zh}')">🔊</button>
+          </div>
+          <div>
+            <div class="card-py">${item.py}</div>
+            <div class="card-zy">${item.zy}</div>
+          </div>
+          <div class="card-en">${item.en}</div>
+          <div class="card-tip">💡 ${item.tip}</div>
+        `;
+        grid.appendChild(div);
+      });
+    }
+
+    /* ================= 2. 旅遊景點與問路覓食互動器 ================= */
+    const travelPlaces = [
+      { zh: "西門町", py: "Xīméndīng", zy: "ㄒㄧ ㄇㄣˊ ㄉㄧㄥ", en: "Ximending", desc: "The bustling youth shopping and pop culture hub in Taipei." },
+      { zh: "台北101", py: "Táiběi yī-líng-yī", zy: "ㄊㄞˊ ㄅㄟˇ ㄧ ㄌㄧㄥˊ ㄧ", en: "Taipei 101", desc: "The iconic skyscraper with an observation deck overlooking the city." },
+      { zh: "淡水老街", py: "Dànshuǐ lǎojiē", zy: "ㄉㄢˋ ㄕㄨㄟˇ ㄌㄠˇ ㄐㄧㄝ", en: "Tamsui Old Street", desc: "Famous for riverside boardwalk sunsets and historic street foods." },
+      { zh: "九份", py: "Jiǔfèn", zy: "ㄐㄧㄡˇ ㄈㄣˋ", en: "Jiufen Mountain Village", desc: "Misty old mountain town packed with red lanterns and traditional teahouses." },
+      { zh: "花蓮夜市", py: "Huālián yèshì", zy: "ㄏㄨㄚ ㄌㄧㄢˊ ㄧㄝˋ ㄕˋ", en: "Hualien Dongdamen Night Market", desc: "The massive night market on the scenic eastern Pacific coast." },
+      { zh: "逢甲夜市", py: "Féngjiǎ yèshì", zy: "ㄈㄥˊ ㄐㄧㄚˇ ㄧㄝˋ ㄕˋ", en: "Fengjia Night Market", desc: "The largest and most creative street food night market in Taichung." },
+      { zh: "阿里山", py: "Ālǐshān", zy: "ㄚ ㄌㄧˇ ㄕㄢ", en: "Alishan", desc: "Sacred cypress forest known for sunrise seas of clouds and historic red train." },
+      { zh: "台南古城", py: "Táinán", zy: "ㄊㄞˊ ㄋㄢˊ", en: "Historic Tainan", desc: "The ancient capital and undisputed street food paradise of Taiwan." }
+    ];
+
+    const travelFoods = [
+      { zh: "滷肉飯", py: "lǔròufàn", zy: "ㄌㄨˇ ㄖㄡˋ ㄈㄢˋ", en: "braised pork rice" },
+      { zh: "珍珠奶茶", py: "zhēnzhū nǎichá", zy: "ㄓㄣ ㄓㄨ ㄋㄞˇ ㄔㄚˊ", en: "boba milk tea" },
+      { zh: "大雞排", py: "dà jīpái", zy: "ㄉㄚˋ ㄐㄧ ㄆㄞˊ", en: "giant fried chicken cutlet" },
+      { zh: "臭豆腐", py: "chòu dòufu", zy: "ㄔㄡˋ ㄉㄡˋ ˙ㄈㄨ", en: "crispy stinky tofu" },
+      { zh: "蚵仔煎", py: "ézǐjiān", zy: "ㄜˊ ㄗˇ ㄐㄧㄢ", en: "oyster omelet" },
+      { zh: "芒果冰", py: "mángguǒbīng", zy: "ㄇㄤˊ ㄍㄨㄛˇ ㄅㄧㄥ", en: "fresh mango shaved ice" }
+    ];
+
+    let selPlaceIdx = 0;
+    let selFoodIdx = 0;
+
+    function renderPlaceSelectors() {
+      const pC = document.getElementById('placeChips');
+      const fC = document.getElementById('foodChips');
+      pC.innerHTML = ''; fC.innerHTML = '';
+
+      travelPlaces.forEach((p, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `chip ${idx === selPlaceIdx ? 'selected' : ''}`;
+        btn.innerText = p.zh;
+        btn.onclick = () => { selPlaceIdx = idx; renderPlaceSelectors(); updateAskPlaceSentence(); };
+        pC.appendChild(btn);
+      });
+
+      travelFoods.forEach((f, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `chip ${idx === selFoodIdx ? 'selected' : ''}`;
+        btn.innerText = f.zh;
+        btn.onclick = () => { selFoodIdx = idx; renderPlaceSelectors(); updateAskPlaceSentence(); };
+        fC.appendChild(btn);
+      });
+    }
+
+    function updateAskPlaceSentence() {
+      const p = travelPlaces[selPlaceIdx];
+      const f = travelFoods[selFoodIdx];
+      document.getElementById('askPlaceZh').innerText = `不好意思，請問${p.zh}有賣${f.zh}嗎？`;
+      document.getElementById('askPlacePy').innerText = `Bù hǎoyìsi, qǐngwèn ${p.py} yǒu mài ${f.py} ma?`;
+      document.getElementById('askPlaceZy').innerText = `ㄅㄨˋ ㄏㄠˇ ㄧˋ ˙ㄙ，ㄑㄧㄥˇ ㄨㄣˋ ${p.zy} ㄧㄡˇ ㄇㄞˋ ${f.zy} ˙ㄇㄚ？`;
+      document.getElementById('askPlaceEn').innerText = `Excuse me, is ${f.en} sold in ${p.en}?`;
+    }
+
+    function renderPlacesGrid() {
+      const grid = document.getElementById('placesGrid');
+      grid.innerHTML = '';
+      travelPlaces.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'place-card';
+        div.innerHTML = `
+          <div class="place-hero">
+            <div>
+              <div style="font-size:1.3rem; font-weight:900;">${p.zh}</div>
+              <div style="font-size:0.85rem; color:#38bdf8;">${p.py}</div>
+            </div>
+            <button class="speaker-btn" onclick="speakText('${p.zh}')">🔊</button>
+          </div>
+          <div class="place-body">
+            <div style="font-weight:800; color:#0284c7;">${p.en}</div>
+            <div style="font-size:0.85rem; color:#64748b; line-height:1.4;">${p.desc}</div>
+          </div>
+        `;
+        grid.appendChild(div);
+      });
+    }
+
+    /* ================= 3. 6 大生活真實情境會話 ================= */
+    const dialoguesList = [
+      {
+        name: "Boba Tea Shop",
+        lines: [
+          { role: "tourist", name: "You (你)", zh: "不好意思，我想點一杯珍珠奶茶。", py: "Bù hǎoyìsi, wǒ xiǎng diǎn yì bēi zhēnzhū nǎichá.", en: "Excuse me, I'd like to order a bubble milk tea." },
+          { role: "local", name: "Clerk (店員)", zh: "好的！甜度冰塊呢？大杯還中杯？", py: "Hǎode! Tiándù bīngkuài ne? Dà bēi hái zhōng bēi?", en: "Sure! What sweetness and ice level? Large or medium?" },
+          { role: "tourist", name: "You (你)", zh: "我要大杯、微糖微冰，然後需要一個袋子。", py: "Wǒ yào dà bēi, wéitáng wéibīng, ránhòu xūyào yí gè dàizi.", en: "Large, 30% sugar and low ice, and I need a plastic bag, please." }
+        ]
+      },
+      {
+        name: "Beef Noodle Shop",
+        lines: [
+          { role: "tourist", name: "You (你)", zh: "請問你們最推薦的招牌是什麼？會辣嗎？", py: "Qǐngwèn nǐmen zuì tuījiàn de zhāopái shì shénme? Huì là ma?", en: "What is your house specialty? Is it spicy?" },
+          { role: "local", name: "Server (店員)", zh: "牛肉麵跟滷味很多人點！小辣很香喔。", py: "Niúròumiàn gēn lǔwèi hěnduō rén diǎn! Xiǎolà hěn xiāng ō.", en: "Our beef noodles and braised Luwei are bestsellers! Mild spicy is delicious." }
+        ]
+      },
+      {
+        name: "7-Eleven Convenience Store",
+        lines: [
+          { role: "tourist", name: "You (你)", zh: "你好，微波便當可以幫我加熱嗎？我用悠遊卡結帳。", py: "Nǐhǎo, wéibō biàndāng kěyǐ bāng wǒ jiārè ma? Wǒ yòng yōuyóukǎ jiézhàng.", en: "Hello, could you microwave this bento box for me? I'll pay with EasyCard." },
+          { role: "local", name: "Clerk (店員)", zh: "沒問題！請問要筷子還是湯匙？發票要印出來嗎？", py: "Méi wèntí! Qǐngwèn yào kuàizi háishì tāngchí? Fāpiào yào yìn chūlái ma?", en: "No problem! Do you need chopsticks or a spoon? Would you like a paper receipt?" }
+        ]
+      },
+      {
+        name: "Taking a Taxi",
+        lines: [
+          { role: "tourist", name: "You (你)", zh: "司機大哥，我要去台北車站，請問大概要多久？", py: "Sījī dàgē, wǒ yào qù Táiběi Chēzhàn, qǐngwèn dàgài yào duōjiǔ?", en: "Driver, I'm heading to Taipei Main Station. How long will it take?" },
+          { role: "local", name: "Driver (司機)", zh: "走高架橋大約十二分鐘！請在右邊便利商店靠邊停。", py: "Zǒu gāojiàqiáo dàyuē shí'èr fēnzhōng!...", en: "About twelve minutes via the elevated highway!" }
+        ]
+      },
+      {
+        name: "Asking Directions",
+        lines: [
+          { role: "tourist", name: "You (你)", zh: "不好意思，請問最近的捷運站在哪裡？走路會很遠嗎？", py: "Bù hǎoyìsi, qǐngwèn zuìjìn de jiéyùnzhàn zài nǎlǐ? Zǒulù huì hěn yuǎn ma?", en: "Excuse me, where is the nearest MRT station? Is it far on foot?" },
+          { role: "local", name: "Pedestrian (路人)", zh: "很近！前面路口右轉走三分鐘就到了！", py: "Hěn jìn! Qiánmiàn lùkǒu yòuzhuǎn zǒu sān fēnzhōng jiù dào le!", en: "Very close! Turn right at the next corner and walk for 3 minutes." }
+        ]
+      },
+      {
+        name: "Night Market Stroll",
+        lines: [
+          { role: "tourist", name: "You (你)", zh: "這裡小吃超多！今天我請客，你想吃什麼就盡情大吃吧！", py: "Zhèlǐ xiǎochī chāoduō! Jīntiān wǒ qǐngkè, nǐ xiǎng chī shénme jiù jìnqíng dà chī ba!", en: "So much food! Today is my treat, eat as much as you like!" },
+          { role: "local", name: "Friend (朋友)", zh: "太棒了！我想吃大腸包小腸、鹹酥雞，再去打彈珠套圈圈！", py: "Tài bàng le! Wǒ xiǎng chī dàcháng bāo xiǎocháng, xiánsūjī...", en: "Awesome! I want Taiwanese sausage with sticky rice, fried chicken, and ring toss games!" }
+        ]
+      }
+    ];
+
+    function loadDialogue(idx) {
+      document.querySelectorAll('#sec-dialog .filter-pills .pill').forEach((btn, i) => btn.classList.toggle('active', i === idx));
+      const box = document.getElementById('dialogueChatBox');
+      box.innerHTML = '';
+      dialoguesList[idx].lines.forEach(l => {
+        const div = document.createElement('div');
+        div.className = `chat-bubble ${l.role}`;
+        div.innerHTML = `
+          <div style="font-size:0.75rem; color:#64748b; margin-bottom:4px; font-weight:800;">${l.name}</div>
+          <div style="font-size:1.05rem; font-weight:800;">${l.zh} <button class="speaker-btn" style="width:26px; height:26px; font-size:0.8rem; display:inline-flex;" onclick="speakText('${l.zh}')">🔊</button></div>
+          <div style="font-size:0.8rem; color:var(--pinyin); margin-top:2px;">${l.py}</div>
+          <div style="font-size:0.8rem; color:#64748b; margin-top:4px;">${l.en}</div>
+        `;
+        box.appendChild(div);
+      });
+    }
+
+    /* ================= 4. 口語句型構造器 ================= */
+    const builderData = {
+      boba: {
+        patterns: [
+          { zh: "我要一杯 [___]。", py: "Wǒ yào yì bēi [___].", zy: "ㄨㄛˇ ㄧㄠˋ ㄧˋ ㄅㄟ [___]。", en: "I'd like a cup of [___]." },
+          { zh: "我要大杯、[___]。", py: "Wǒ yào dà bēi, [___].", zy: "ㄨㄛˇ ㄧㄠˋ ㄉㄚˋ ㄅㄟ, [___]。", en: "I want large size, [___]." }
+        ],
+        items: [
+          { zh: "珍珠奶茶", py: "zhēnzhū nǎichá", zy: "ㄓㄣ ㄓㄨ ㄋㄞˇ ㄔㄚˊ", en: "boba milk tea" },
+          { zh: "微糖微冰", py: "wéitáng wéibīng", zy: "ㄨㄟˊ ㄊㄤˊ ㄨㄟˊ ㄅㄧㄥ", en: "30% sugar and low ice" },
+          { zh: "無糖去冰", py: "wútáng qùbīng", zy: "ㄨˊ ㄊㄤˊ ㄑㄩˋ ㄅㄧㄥ", en: "sugar-free with no ice" }
+        ]
+      },
+      restaurant: {
+        patterns: [
+          { zh: "請問這個會 [___] 嗎？", py: "Qǐngwèn zhège huì [___] ma?", zy: "ㄑㄧㄥˇ ㄨㄣˋ ㄓㄜˋ ˙ㄍㄜ ㄏㄨㄟˋ [___] ˙ㄇㄚ？", en: "Excuse me, is this [___]?" },
+          { zh: "請問你們只能 [___] 嗎？", py: "Qǐngwèn nǐmen zhǐnéng [___] ma?", zy: "ㄑㄧㄥˇ ㄨㄣˋ ㄋㄧˇ ˙ㄇㄣ ㄓˇ ㄋㄥˊ [___] ˙ㄇㄚ？", en: "Do you only accept [___]?" }
+        ],
+        items: [
+          { zh: "辣", py: "là", zy: "ㄌㄚˋ", en: "spicy" },
+          { zh: "付現", py: "fùxiàn", zy: "ㄈㄨˋ ㄒㄧㄢˋ", en: "cash payment" },
+          { zh: "刷卡", py: "shuākǎ", zy: "ㄕㄨㄚ ㄎㄚˇ", en: "credit card" }
+        ]
+      },
+      transport: {
+        patterns: [
+          { zh: "請問到 [___] 大概多久？", py: "Qǐngwèn dào [___] dàgài duōjiǔ?", zy: "ㄑㄧㄥˇ ㄨㄣˋ ㄉㄠˋ [___] ㄉㄚˋ ㄍㄞˋ ㄉㄨㄛ ㄐㄧㄡˇ？", en: "How long does it take to get to [___]?" }
+        ],
+        items: [
+          { zh: "台北車站", py: "Táiběi Chēzhàn", zy: "ㄊㄞˊ ㄅㄟˇ ㄔㄜ ㄓㄢˋ", en: "Taipei Main Station" },
+          { zh: "花蓮夜市", py: "Huālián yèshì", zy: "ㄏㄨㄚ ㄌㄧㄢˊ ㄧㄝˋ ㄕˋ", en: "Hualien Night Market" }
+        ]
+      }
+    };
+    let curBSc = 'boba';
+    let selPat = 0;
+    let selIt = 0;
+
+    function switchBuilderSc(key) {
+      curBSc = key;
+      selPat = 0; selIt = 0;
+      document.querySelectorAll('#sec-builder .filter-pills .pill').forEach((b, i) => b.classList.toggle('active', ['boba','restaurant','transport'][i] === key));
+      renderBuilderChips();
+      updateBuilderSentence();
+    }
+
+    function renderBuilderChips() {
+      const pC = document.getElementById('patternChips');
+      const iC = document.getElementById('itemChips');
+      pC.innerHTML = ''; iC.innerHTML = '';
+
+      builderData[curBSc].patterns.forEach((p, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `chip ${idx === selPat ? 'selected' : ''}`;
+        btn.innerText = p.zh;
+        btn.onclick = () => { selPat = idx; renderBuilderChips(); updateBuilderSentence(); };
+        pC.appendChild(btn);
+      });
+
+      builderData[curBSc].items.forEach((it, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `chip ${idx === selIt ? 'selected' : ''}`;
+        btn.innerText = it.zh;
+        btn.onclick = () => { selIt = idx; renderBuilderChips(); updateBuilderSentence(); };
+        iC.appendChild(btn);
+      });
+    }
+
+    function updateBuilderSentence() {
+      const p = builderData[curBSc].patterns[selPat];
+      const it = builderData[curBSc].items[selIt];
+      document.getElementById('builderZh').innerText = p.zh.replace('[___]', it.zh);
+      document.getElementById('builderPy').innerText = p.py.replace('[___]', it.py);
+      document.getElementById('builderZy').innerText = p.zy.replace('[___]', it.zy);
+      document.getElementById('builderEn').innerText = p.en.replace('[___]', it.en);
+    }
+
+    /* ================= 5. 美食大百科 ================= */
+    const foodsList = [
+      { emoji: "🍗", zh: "鹹酥雞", py: "xiánsūjī", zy: "ㄒㄧㄢˊ ㄙㄨ ㄐㄧ", en: "Taiwanese Popcorn Chicken", comps: ["fried chicken bites", "crispy basil leaves", "sweet potato fries"] },
+      { emoji: "🌭", zh: "大腸包小腸", py: "dàcháng bāo xiǎocháng", zy: "ㄉㄚˋ ㄔㄤˊ ㄅㄠ ㄒㄧㄠˇ ㄔㄤˊ", en: "Taiwanese Sausage in Sticky Rice", comps: ["sticky rice sausage", "sweet pork sausage", "raw garlic cloves"] },
+      { emoji: "🥭", zh: "芒果冰", py: "mángguǒbīng", zy: "ㄇㄤˊ ㄍㄨㄛˇ ㄅㄧㄥ", en: "Fresh Mango Shaved Ice", comps: ["fresh Irwin mango chunks", "finely shaved ice", "condensed milk drizzle"] },
+      { emoji: "🧋", zh: "珍珠奶茶", py: "zhēnzhū nǎichá", zy: "ㄓㄣ ㄓㄨ ㄋㄞˇ ㄔㄚˊ", en: "Bubble Milk Tea (Boba)", comps: ["brown sugar tapioca pearls", "Assam black tea", "fresh milk"] },
+      { emoji: "🥪", zh: "棺材板", py: "guāncáibǎn", zy: "ㄍㄨㄢ ˙ㄘㄞ ㄅㄢˇ", en: "Coffin Toast", comps: ["deep-fried thick bread", "creamy seafood chowder"] },
+      { emoji: "🥩", zh: "大雞排", py: "dà jīpái", zy: "ㄉㄚˋ ㄐㄧ ㄆㄞˊ", en: "Giant Fried Chicken Cutlet", comps: ["tender chicken breast", "crispy pepper batter"] },
+      { emoji: "🥟", zh: "小籠包", py: "xiǎolóngbāo", zy: "ㄒㄧㄠˇ ㄌㄨㄥˊ ㄅㄠ", en: "Steamed Soup Dumplings", comps: ["paper-thin wrapper", "hot savory pork broth inside"] },
+      { emoji: "🍜", zh: "大腸麵線", py: "dàcháng miànxiàn", zy: "ㄉㄚˋ ㄔㄤˊ ㄇㄧㄢˋ ㄒㄧㄢˋ", en: "Intestine Vermicelli", comps: ["thin rice vermicelli", "braised pork intestine", "black vinegar"] },
+      { emoji: "🍳", zh: "蛋餅", py: "dànbǐng", zy: "ㄉㄢˋ ㄅㄧㄥˇ", en: "Taiwanese Egg Crepe", comps: ["crispy crepe wrapper", "fried egg & scallions", "thick soy paste"] },
+      { emoji: "🍚", zh: "滷肉飯", py: "lǔròufàn", zy: "ㄌㄨˇ ㄖㄡˋ ㄈㄢˋ", en: "Braised Pork Rice", comps: ["slow-cooked pork belly mince", "warm steamed rice", "soy braised egg"] }
+    ];
+
+    function renderFoods() {
+      const grid = document.getElementById('foodsGrid');
+      grid.innerHTML = '';
+      foodsList.forEach(f => {
+        const div = document.createElement('div');
+        div.className = 'quote-card';
+        div.innerHTML = `
+          <div class="card-top">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:2rem;">${f.emoji}</span>
+              <div>
+                <div class="card-zh">${f.zh}</div>
+                <div class="card-py">${f.py} · <span class="card-zy">${f.zy}</span></div>
+              </div>
+            </div>
+            <button class="speaker-btn" onclick="speakText('${f.zh}')">🔊</button>
+          </div>
+          <div class="card-en">${f.en}</div>
+          <div style="font-size:0.78rem; color:#64748b; margin-top:4px;">
+            <b>🧩 Ingredients:</b> ${f.comps.join(' · ')}
+          </div>
+        `;
+        grid.appendChild(div);
+      });
+    }
+
+    /* ================= 6. 3D 抽認卡 ================= */
+    const flashcardsData = [
+      { emoji: "🧋", zh: "珍珠奶茶", py: "zhēnzhū nǎichá", zy: "ㄓㄣ ㄓㄨ ㄋㄞˇ ㄔㄚˊ", en: "Bubble Milk Tea", tip: "'Zhēnzhū' = Pearls of the sea. 'Nǎichá' = Milk tea." },
+      { emoji: "🍳", zh: "蛋餅", py: "dànbǐng", zy: "ㄉㄢˋ ㄅㄧㄥˇ", en: "Taiwanese Egg Crepe", tip: "'Dàn' = Egg, 'Bǐng' = Flat crepe. The staple Taiwanese breakfast." },
+      { emoji: "🍗", zh: "鹹酥雞", py: "xiánsūjī", zy: "ㄒㄧㄢˊ ㄙㄨ ㄐㄧ", en: "Taiwanese Popcorn Chicken", tip: "'Xián' = Salty, 'Sū' = Crispy, 'Jī' = Chicken." },
+      { emoji: "🌭", zh: "大腸包小腸", py: "dàcháng bāo xiǎocháng", zy: "ㄉㄚˋ ㄔㄤˊ ㄅㄠ ㄒㄧㄠˇ ㄔㄤˊ", en: "Sausage in Sticky Rice", tip: "Literally: 'Big sticky rice sausage wraps around small pork sausage'." },
+      { emoji: "🥭", zh: "芒果冰", py: "mángguǒbīng", zy: "ㄇㄤˊ ㄍㄨㄛˇ ㄅㄧㄥ", en: "Mango Shaved Ice", tip: "'Mángguǒ' sounds just like 'Mango', and 'Bīng' means ice." },
+      { emoji: "💳", zh_t: "悠遊卡", zh_s: "悠游卡", py: "yōuyóukǎ", zy: "ㄧㄡ ㄧㄡˊ ㄎㄚˇ", en: "EasyCard Transit Pass", tip: "Your tap-and-go card for MRT, buses, and paying at all 7-Elevens." },
+      { emoji: "🚫", zh_t: "禁止飲食", zh_s: "禁止饮食", py: "jìnzhǐ yǐnshí", zy: "ㄐㄧㄣˋ ㄓˇ ㄧㄣˇ ㄕˊ", en: "No Food or Drink Allowed", tip: "Strict MRT rule: no sipping water or chewing gum past the yellow line!" }
+    ];
+    let curFcIdx = 0;
+    function flipCard() { document.getElementById('flashCardInner').classList.toggle('flipped'); }
+    function renderFlashcard() {
+      const item = flashcardsData[curFcIdx];
+      document.getElementById('flashCardInner').classList.remove('flipped');
+      document.getElementById('fcFrontEmoji').innerText = item.emoji;
+      document.getElementById('fcFrontZh').innerText = item.zh;
+      document.getElementById('fcFrontPy').innerText = item.py;
+      document.getElementById('fcFrontZy').innerText = item.zy;
+      document.getElementById('fcBackEn').innerText = item.en;
+      document.getElementById('fcBackTip').innerText = item.tip;
+      document.getElementById('fcCounter').innerText = `${curFcIdx + 1} / ${flashcardsData.length}`;
+    }
+    function nextCard() { curFcIdx = (curFcIdx + 1) % flashcardsData.length; renderFlashcard(); }
+    function prevCard() { curFcIdx = (curFcIdx - 1 + flashcardsData.length) % flashcardsData.length; renderFlashcard(); }
+
+    /* ================= 7. 英文版注音對照表 ================= */
+    const consonantsList = [
+      { zy: "ㄅ", py: "b", hanzi: "八", truco: "Like a soft English 'p' with zero puff of air (unaspirated)." },
+      { zy: "ㄆ", py: "p", hanzi: "怕", truco: "Aspirated 'p' with a strong puff of air (moves a tissue paper)." },
+      { zy: "ㄇ", py: "m", hanzi: "媽", truco: "Identical to 'm' in 'mother'." },
+      { zy: "ㄈ", py: "f", hanzi: "發", truco: "Identical to 'f' in 'fast'." },
+      { zy: "ㄉ", py: "d", hanzi: "大", truco: "Like a crisp, soft 't' without puffing out air." },
+      { zy: "ㄊ", py: "t", hanzi: "他", truco: "Aspirated 't' with a strong burst of air." },
+      { zy: "ㄋ", py: "n", hanzi: "你", truco: "Identical to 'n' in 'nice'." },
+      { zy: "ㄌ", py: "l", hanzi: "來", truco: "Identical to 'l' in 'light'." },
+      { zy: "ㄍ", py: "g", hanzi: "哥", truco: "Like a soft 'k' without blowing air (like 'sk' in 'skill')." },
+      { zy: "ㄎ", py: "k", hanzi: "看", truco: "Strongly aspirated 'k' (like 'k' in 'kite')." },
+      { zy: "ㄏ", py: "h", hanzi: "喝", truco: "Like 'h' in 'hat', slightly raspy from the throat." },
+      { zy: "ㄐ", py: "j", hanzi: "家", truco: "Like a smiling soft 'j/ch' without blowing air." },
+      { zy: "ㄑ", py: "q", hanzi: "七", truco: "Smiling 'ch' with a strong puff of air." },
+      { zy: "ㄒ", py: "x", hanzi: "西", truco: "Like 'sh' while smiling widely with lips pulled back." },
+      { zy: "ㄓ", py: "zh", hanzi: "中", truco: "Curl your tongue tip slightly back (retroflex 'j/ch')." },
+      { zy: "ㄔ", py: "ch", hanzi: "吃", truco: "Curled tongue 'ch' with a strong burst of air." },
+      { zy: "ㄕ", py: "sh", hanzi: "是", truco: "Like English 'sh' with tongue tip curled backward." },
+      { zy: "ㄖ", py: "r", hanzi: "日", truco: "Soft friction sound between English 'r' and French 'j'." },
+      { zy: "ㄗ", py: "z", hanzi: "字", truco: "Soft 'ds/ts' sound without air." },
+      { zy: "ㄘ", py: "c", hanzi: "次", truco: "Sharp 'ts' with a strong puff of air (like 'cats')." },
+      { zy: "ㄙ", py: "s", hanzi: "四", truco: "Identical to English 's' in 'sun'." }
+    ];
+
+    const vocalsList = [
+      { zy: "ㄚ", py: "a", hanzi: "啊", truco: "Open 'ah' like in 'father'." },
+      { zy: "ㄛ", py: "o", hanzi: "喔", truco: "Rounded 'aw' like in 'law'." },
+      { zy: "ㄜ", py: "e", hanzi: "俄", truco: "Guttural sound between 'uh' and 'er'." },
+      { zy: "ㄝ", py: "ie / e", hanzi: "也", truco: "Like 'ye' in 'yes'." },
+      { zy: "ㄞ", py: "ai", hanzi: "愛", truco: "Like 'eye' or 'ai' in 'aisle'." },
+      { zy: "ㄟ", py: "ei", hanzi: "黑", truco: "Like 'ay' in 'day'." },
+      { zy: "ㄠ", py: "ao", hanzi: "包", truco: "Like 'ow' in 'cow'." },
+      { zy: "ㄡ", py: "ou", hanzi: "頭", truco: "Like 'o' in 'go'." },
+      { zy: "ㄢ", py: "an", hanzi: "安", truco: "Like 'an' in 'ban'." },
+      { zy: "ㄣ", py: "en", hanzi: "恩", truco: "Like 'un' in 'under'." },
+      { zy: "ㄤ", py: "ang", hanzi: "昂", truco: "Deep nasal sound like 'ong' in 'song'." },
+      { zy: "ㄥ", py: "eng", hanzi: "風", truco: "Like 'ung' in 'lung'." },
+      { zy: "ㄦ", py: "er", hanzi: "二", truco: "Curl tongue back: like 'er' in 'sir'." },
+      { zy: "ㄧ", py: "i", hanzi: "一", truco: "Like 'ee' in 'see'." },
+      { zy: "ㄨ", py: "u", hanzi: "五", truco: "Like 'oo' in 'moon'." },
+      { zy: "ㄩ", py: "ü", hanzi: "雨", truco: "Round your lips for 'oo' while trying to pronounce 'ee'." }
+    ];
+
+    function switchPhoneticPill(pillKey) {
+      phoneticPill = pillKey;
+      document.getElementById('pillCons').classList.toggle('active', pillKey === 'cons');
+      document.getElementById('pillVoc').classList.toggle('active', pillKey === 'voc');
+      renderPhonetics();
+    }
+
+    function renderPhonetics() {
+      const grid = document.getElementById('phoneticCardsGrid');
+      grid.innerHTML = '';
+      const list = phoneticPill === 'cons' ? consonantsList : vocalsList;
+      list.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'quote-card';
+        div.innerHTML = `
+          <div class="card-top">
+            <div style="display:flex; align-items:baseline; gap:10px;">
+              <span style="font-size:1.6rem; font-weight:900; color:#22c55e;">${item.zy}</span>
+              <span style="font-size:1.4rem; font-weight:900; color:#0f172a;">${item.py}</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="background:#f1f5f9; color:#475569; font-size:0.95rem; font-weight:800; padding:4px 10px; border-radius:10px;">${item.hanzi}</span>
+              <button class="speaker-btn" onclick="speakText('${item.hanzi}')">🔊</button>
+            </div>
+          </div>
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:8px 12px; font-size:0.78rem; color:#475569;">
+            <b style="color:#16a34a;">EN Tip:</b> ${item.truco}
+          </div>
+        `;
+        grid.appendChild(div);
+      });
+    }
+
+    /* ================= 語音朗讀與繁簡切換 ================= */
+    function speakText(txt) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(txt);
+      u.lang = 'zh-TW';
+      u.rate = isSlow ? 0.6 : 1.0;
+      window.speechSynthesis.speak(u);
+    }
+
+    function toggleCharMode() {
+      isTrad = !isTrad;
+      document.getElementById('toggleChar').innerText = isTrad ? '🇹🇼 Traditional (TC)' : '🇨🇳 Simplified (SC)';
+      renderUniversal();
+      updateAskPlaceSentence();
+      loadDialogue(0);
+      updateBuilderSentence();
+      renderFoods();
+      renderFlashcard();
+    }
+
+    function toggleSpeedMode() {
+      isSlow = !isSlow;
+      const b = document.getElementById('toggleSpeed');
+      b.innerText = isSlow ? '🐢 0.6x' : '🐇 1.0x';
+      b.classList.toggle('active', isSlow);
+    }
+
+    // 初始化啟動
+    renderUniversal();
+    renderPlaceSelectors();
+    updateAskPlaceSentence();
+    renderPlacesGrid();
+    loadDialogue(0);
+    switchBuilderSc('boba');
+    renderFoods();
+    renderFlashcard();
+    renderPhonetics();
+  </script>
+</body>
+</html>
